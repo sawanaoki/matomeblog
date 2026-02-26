@@ -1,0 +1,326 @@
+---
+import Layout from '../layouts/Layout.astro';
+import articles from '../data/articles.json';
+
+// Utility UI function dates
+const formatDate = (dateString) => {
+    const d = new Date(dateString);
+    return `${d.getMonth()+1}月${d.getDate()}日 ${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`;
+};
+---
+
+<Layout title="最新まとめ記事 - Esuteru Clone">
+	<main class="page-container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    今、世界で<br/>
+                    <span class="gradient-text">一番熱い話題</span>を掴め。
+                </h1>
+                <p class="hero-subtitle">Xトレンド、海外フォーラム、5chの情報をAIが24時間体制で要約・抽出。</p>
+                <div class="hero-badges">
+                    <span class="badge badge-live"><span class="pulse"></span> LIVE UPDATE</span>
+                    <span class="badge">#ゲーム</span>
+                    <span class="badge">#アニメ</span>
+                    <span class="badge">#IT</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Article List -->
+        <section class="articles-section">
+            <div class="section-header">
+                <h2>⚡ 最新まとめ記事</h2>
+                <div class="sort-tabs">
+                    <button class="active">新着順</button>
+                    <button>人気順</button>
+                    <button>コメント数</button>
+                </div>
+            </div>
+
+            <div class="article-grid">
+                {articles.map((article, index) => (
+                    <a href={`/article/${article.id}`} class="article-card" style={`animation-delay: ${index * 0.1}s`}>
+                        <div class="card-image-wrapper">
+                            <img src={article.imageUrl} alt={article.title} class="card-image" loading="lazy" />
+                            <div class="card-overlay">
+                                <span class="source-tag">{article.source.split(' - ')[1] || 'ニュース'}</span>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-meta">
+                                <span class="card-date">🕒 {formatDate(article.pubDate)}</span>
+                                <span class="card-comments">💬 {Math.floor(Math.random() * 500) + 10}</span>
+                            </div>
+                            <h3 class="card-title">{article.title}</h3>
+                            <p class="card-snippet">{article.contentSnippet.substring(0, 60)}...</p>
+                        </div>
+                    </a>
+                ))}
+            </div>
+        </section>
+	</main>
+</Layout>
+
+<style>
+    .page-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem 4rem;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        padding: 4rem 0 5rem;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 900;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+        letter-spacing: -1px;
+    }
+
+    .gradient-text {
+        background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        margin-bottom: 2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-badges {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .badge {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 0.5rem 1rem;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-main);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .badge-live {
+        background: rgba(239, 68, 68, 0.1);
+        border-color: rgba(239, 68, 68, 0.2);
+        color: #fca5a5;
+    }
+
+    .pulse {
+        width: 8px;
+        height: 8px;
+        background: #ef4444;
+        border-radius: 50%;
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+        animation: pulsing 1.5s infinite cubic-bezier(0.66, 0, 0, 1);
+    }
+
+    @keyframes pulsing {
+        to {
+            box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+        }
+    }
+
+    /* Articles Section */
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 1rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.8rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .sort-tabs {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .sort-tabs button {
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        font-family: inherit;
+        font-size: 0.9rem;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: all 0.2s;
+    }
+
+    .sort-tabs button:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-main);
+    }
+
+    .sort-tabs button.active {
+        background: rgba(59, 130, 246, 0.15);
+        color: var(--accent-glow);
+    }
+
+    /* Grid layout for Cards */
+    .article-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 2rem;
+    }
+
+    /* Card Styling */
+    .article-card {
+        background: var(--card-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        animation: fadeInUp 0.5s ease backwards;
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .article-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--glass-shadow);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .card-image-wrapper {
+        width: 100%;
+        height: 180px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .article-card:hover .card-image {
+        transform: scale(1.05);
+    }
+
+    .card-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, transparent 60%, rgba(15, 23, 42, 0.9) 100%);
+        padding: 1rem;
+        display: flex;
+        align-items: flex-end;
+    }
+
+    .source-tag {
+        background: rgba(16, 185, 129, 0.8);
+        color: white;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 0.2rem 0.6rem;
+        border-radius: 4px;
+        backdrop-filter: blur(4px);
+    }
+
+    .card-content {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        margin-bottom: 0.75rem;
+    }
+
+    .card-comments {
+        color: #f87171;
+    }
+
+    .card-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        line-height: 1.4;
+        margin-bottom: 1rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        transition: color 0.2s;
+    }
+
+    .article-card:hover .card-title {
+        color: var(--accent-glow);
+    }
+
+    .card-snippet {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+        margin-top: auto;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.2rem;
+        }
+        .page-container {
+            padding: 0 1rem 3rem;
+        }
+        .section-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+    }
+</style>

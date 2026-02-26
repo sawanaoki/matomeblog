@@ -1,0 +1,445 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import articles from '../../data/articles.json';
+
+export async function getStaticPaths() {
+    return articles.map((article) => {
+        return {
+            params: { id: article.id },
+            props: { article },
+        };
+    });
+}
+
+const { article } = Astro.props;
+
+// Mocking 5ch-like comments generated from the source
+const mockComments = [
+    { id: 1, name: '名無しさん', isVIP: true, text: 'これマジ？テンション上がってきたわｗｗｗ', time: '12:05' },
+    { id: 2, name: '名無しさん', text: '流石に釣りだろ。落ち着けよ。', time: '12:07' },
+    { id: 3, name: '名無しさん', text: 'ソース読んだ？確定やんけ！！', time: '12:15' },
+    { id: 4, name: '名無しさん', text: 'AI要約優秀すぎて草。元記事読まなくなったわ', time: '12:20' },
+    { id: 5, name: '名無しさん', isVIP: true, text: 'きたあああああああああああああああああああ', time: '12:22' },
+];
+
+const formatDate = (dateString) => {
+    const d = new Date(dateString);
+    return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日 ${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`;
+};
+---
+
+<Layout title={`${article.title} - Esuteru Clone`}>
+    <main class="article-page">
+        <!-- Main Article Container -->
+        <article class="article-container">
+            <!-- Article Header -->
+            <header class="article-header">
+                <div class="meta">
+                    <span class="source-tag">{article.source}</span>
+                    <span class="date">{formatDate(article.pubDate)}</span>
+                </div>
+                <h1 class="title">{article.title}</h1>
+            </header>
+
+            <!-- Original Article Link Banner -->
+            <a href={article.link} target="_blank" rel="noopener noreferrer" class="original-link-banner">
+                <span class="icon">🔗</span>
+                <div class="text">
+                    <strong>元記事を読む (外部サイト)</strong>
+                    <p>{article.link}</p>
+                </div>
+                <span class="arrow">→</span>
+            </a>
+
+            <!-- Article Content & AI Summary (Mock) -->
+            <div class="content-body">
+                <div class="ai-summary">
+                    <div class="ai-header">
+                        <span class="robot-icon">🤖</span> AI 3行まとめ
+                    </div>
+                    <ul>
+                        {article.aiSummary?.map(line => (
+                            <li>{line}</li>
+                        ))}
+                    </ul>
+                </div>
+                
+                <p class="snippet-text">{article.contentSnippet}</p>
+                
+                <img src={article.imageUrl} alt={article.title} class="article-hero-image" />
+            </div>
+
+            <!-- "Matome" Style Comments Section -->
+            <section class="comments-section">
+                <h2 class="comments-title">
+                    <span class="flame">🔥</span> 反応まとめ
+                </h2>
+                
+                <div class="comments-thread">
+                    {mockComments.map(comment => (
+                        <div class="comment-box">
+                            <div class="comment-header">
+                                <span class="res-num">{comment.id} :</span>
+                                <span class={`res-name ${comment.isVIP ? 'vip' : ''}`}>{comment.name}</span>
+                                <span class="res-time">{formatDate(article.pubDate).split(' ')[0]} {comment.time}</span>
+                            </div>
+                            <div class="comment-body">
+                                {comment.text}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                
+                <div class="comment-form">
+                    <h3>コメントを残す</h3>
+                    <div class="form-group">
+                        <input type="text" placeholder="名前" value="名無しさん" class="input-name"/>
+                    </div>
+                    <div class="form-group flex-group">
+                        <textarea placeholder="コメントを入力..."></textarea>
+                        <button class="btn-submit">書き込む</button>
+                    </div>
+                </div>
+            </section>
+        </article>
+
+        <!-- Sidebar / Recommended -->
+        <aside class="sidebar">
+            <div class="sidebar-widget">
+                <h3>📈 現在のトレンド</h3>
+                <ul class="trend-list">
+                    <li><a href="#">1. 新作RPGの発売日が決定！予約殺到</a></li>
+                    <li><a href="#">2. 話題のAIサービス、無料枠拡大</a></li>
+                    <li><a href="#">3. 人気VTuberが3Dモデルをお披露目</a></li>
+                    <li><a href="#">4. スマホの新OSベータ版が登場</a></li>
+                    <li><a href="#">5. 有名アニメの続編制作が急遽発表</a></li>
+                </ul>
+            </div>
+        </aside>
+    </main>
+</Layout>
+
+<style>
+    .article-page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 3rem;
+        align-items: start;
+    }
+
+    /* Article Container */
+    .article-container {
+        background: var(--card-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        padding: 3rem;
+        backdrop-filter: blur(10px);
+        box-shadow: var(--glass-shadow);
+    }
+
+    /* Header */
+    .article-header {
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--glass-border);
+    }
+
+    .meta {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .source-tag {
+        background: var(--accent-color);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 0.8rem;
+    }
+
+    .date {
+        color: var(--text-muted);
+        font-weight: 600;
+    }
+
+    .title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        line-height: 1.3;
+        color: var(--text-main);
+    }
+
+    /* Banner */
+    .original-link-banner {
+        display: flex;
+        align-items: center;
+        background: linear-gradient(135deg, rgba(30,58,138,0.5) 0%, rgba(59,130,246,0.2) 100%);
+        border: 1px solid rgba(59, 130, 246, 0.4);
+        padding: 1.2rem;
+        border-radius: 12px;
+        margin-bottom: 2.5rem;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .original-link-banner:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .original-link-banner .icon {
+        font-size: 2rem;
+        margin-right: 1.5rem;
+    }
+
+    .original-link-banner .text {
+        flex: 1;
+    }
+
+    .original-link-banner .text strong {
+        display: block;
+        font-size: 1.1rem;
+        color: var(--accent-glow);
+        margin-bottom: 0.3rem;
+    }
+
+    .original-link-banner .text p {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 400px;
+    }
+
+    .original-link-banner .arrow {
+        font-size: 1.5rem;
+        color: var(--accent-glow);
+        font-weight: bold;
+    }
+
+    /* Content Body */
+    .content-body {
+        margin-bottom: 4rem;
+    }
+
+    .ai-summary {
+        background: rgba(16, 185, 129, 0.1);
+        border-left: 4px solid #10b981;
+        padding: 1.5rem;
+        border-radius: 0 12px 12px 0;
+        margin-bottom: 2.5rem;
+    }
+
+    .ai-header {
+        font-weight: 800;
+        color: #34d399;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+    }
+
+    .ai-summary ul {
+        margin: 0;
+        padding-left: 1.5rem;
+    }
+
+    .ai-summary li {
+        margin-bottom: 0.5rem;
+        line-height: 1.6;
+        color: #d1fae5;
+    }
+
+    .snippet-text {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #cbd5e1;
+        margin-bottom: 2rem;
+    }
+
+    .article-hero-image {
+        width: 100%;
+        border-radius: 12px;
+        margin-bottom: 2rem;
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    /* Comments Section */
+    .comments-section {
+        background: rgba(15, 23, 42, 0.4);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 2.5rem;
+    }
+
+    .comments-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+        padding-bottom: 1rem;
+    }
+
+    .comment-box {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px dashed rgba(255,255,255,0.1);
+    }
+
+    .comment-box:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .comment-header {
+        margin-bottom: 0.8rem;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: baseline;
+        gap: 0.5rem;
+    }
+
+    .res-num { color: var(--text-muted); font-weight: 600; }
+    .res-name { color: #10b981; font-weight: 700; }
+    .res-name.vip { color: #f43f5e; }
+    .res-time { color: #64748b; font-size: 0.8rem; margin-left: auto; }
+
+    .comment-body {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: var(--text-main);
+        padding-left: 1.5rem;
+    }
+
+    /* Form */
+    .comment-form {
+        margin-top: 3rem;
+        background: rgba(0,0,0,0.2);
+        padding: 2rem;
+        border-radius: 12px;
+        border: 1px solid var(--glass-border);
+    }
+
+    .comment-form h3 {
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .flex-group {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    input, textarea {
+        width: 100%;
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid var(--glass-border);
+        color: white;
+        padding: 0.8rem 1rem;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 1rem;
+    }
+
+    textarea {
+        height: 100px;
+        resize: vertical;
+    }
+
+    input:focus, textarea:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-submit {
+        background: var(--accent-color);
+        color: white;
+        border: none;
+        padding: 0.8rem 2rem;
+        border-radius: 8px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        align-self: flex-end;
+    }
+
+    .btn-submit:hover {
+        background: var(--accent-glow);
+        transform: translateY(-2px);
+    }
+
+    /* Sidebar */
+    .sidebar-widget {
+        background: var(--card-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 1.5rem;
+        position: sticky;
+        top: 100px;
+    }
+
+    .sidebar-widget h3 {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        color: var(--accent-glow);
+        border-bottom: 1px solid var(--glass-border);
+        padding-bottom: 0.8rem;
+    }
+
+    .trend-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .trend-list li {
+        margin-bottom: 1rem;
+    }
+
+    .trend-list a {
+        font-size: 0.95rem;
+        line-height: 1.4;
+        color: var(--text-main);
+        transition: color 0.2s;
+        display: block;
+    }
+
+    .trend-list a:hover {
+        color: var(--accent-glow);
+    }
+
+    @media (max-width: 992px) {
+        .article-page {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .article-container {
+            padding: 1.5rem;
+        }
+        .title {
+            font-size: 1.8rem;
+        }
+    }
+</style>
