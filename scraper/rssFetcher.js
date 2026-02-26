@@ -67,23 +67,21 @@ async function fetchFeeds() {
                 const imageUrl = `https://picsum.photos/seed/${id}/800/400`;
                 const contentText = item.contentSnippet || item.content || '';
 
-                // AI要約を生成 (OPENAI_API_KEYがある場合)
-                let aiData = null;
-                if (openai) {
-                    // APIのレート制限を考慮する場合は setTimeout などを挟む
-                    aiData = await generateAISummary(contentText, item.title);
-                }
-
                 const article = {
                     id,
-                    title: aiData?.aiTitle || item.title,
+                    title: item.title,
                     originalTitle: item.title,
                     link: item.link,
                     pubDate: item.pubDate,
                     contentSnippet: contentText,
                     source: feed.title,
                     imageUrl,
-                    aiSummary: aiData?.aiSummary || ['AI機能がオフになっています', 'APIキーを設定してください', '('.concat(contentText.substring(0, 20)).concat('...)')]
+                    // AIを使わない場合の固定文言（フロントエンド側で要約に見せるテキスト）
+                    aiSummary: [
+                        'この記事は元サイトから自動取得しています',
+                        '詳細なニュースの続きは「元記事を読む」からご確認ください',
+                        '['.concat(contentText.substring(0, 30)).concat('...]')
+                    ]
                 };
 
                 // SQLite DBに保存

@@ -30,6 +30,20 @@
    ```
    プレビュー用サーバーが立ち上がるので、ブラウザで `http://localhost:4321` にアクセスしてください。
 
-## 今後の拡張（運用に向けて）
-- この流れをGitHub Actionsなどに組み込み、1時間に1回 `node rssFetcher.js` と `npm run build` を自動で走らせ、Vercel等へ自動デプロイする仕組み（定期実行フロー）を作ると、完全に放置でサイトが更新され続けます。
-- 現在のダミーAIテキスト部分に、OpenAIなどのAPIを繋ぐことで、「長文を３行でまとめるAI機能」を自動化可能です。
+## 今後の拡張・本番運用に向けて（GitHub連携）
+完全に自動化（GitHub Actionsを利用した1時間ごとの自動更新）を動かすためには、作成したこのプロジェクトをGitHubにアップロードする必要があります。
+
+1. **GitHubで空のリポジトリを作成**します（例: `esuteru-clone`）
+2. **ローカルからプッシュ**します。ターミナルで以下を実行してください：
+   ```powershell
+   cd d:\ソフト開発\news
+   git remote add origin https://github.com/あなたのユーザー名/リポジトリ名.git
+   git branch -M main
+   git push -u origin main
+   ```
+3. GitHubリポジトリの **Settings > Secrets and variables > Actions** に移動し、`New repository secret`をクリックして以下を登録します。
+   - Name: `OPENAI_API_KEY`
+   - Secret: （ChatGPTのAPIキー）
+   ※APIキーがない場合は登録不要ですが、AI要約はダミーテキストになります。
+
+これで、毎時0分にGitHub Actionsが自動でニュースを収集・更新するようになります。
