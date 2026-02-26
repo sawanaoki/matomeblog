@@ -18,12 +18,12 @@ const formatDate = (dateString) => {
                     今、世界で<br/>
                     <span class="gradient-text">一番熱い話題</span>を掴め。
                 </h1>
-                <p class="hero-subtitle">Xトレンド、海外フォーラム、5chの情報をAIが24時間体制で要約・抽出。</p>
+                <p class="hero-subtitle">X(旧Twitter)や5chで今最もバズっている話題・エンタメニュースをお届け。</p>
                 <div class="hero-badges">
-                    <span class="badge badge-live"><span class="pulse"></span> LIVE UPDATE</span>
+                    <span class="badge badge-live"><span class="pulse"></span> 炎上・バズ</span>
+                    <span class="badge">#エンタメ</span>
                     <span class="badge">#ゲーム</span>
-                    <span class="badge">#アニメ</span>
-                    <span class="badge">#IT</span>
+                    <span class="badge">#おもしろ</span>
                 </div>
             </div>
         </section>
@@ -193,8 +193,14 @@ const formatDate = (dateString) => {
     /* Grid layout for Cards */
     .article-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        grid-template-columns: 1fr 1fr;
         gap: 1.2rem;
+    }
+
+    @media (max-width: 640px) {
+        .article-grid {
+            grid-template-columns: 1fr;
+        }
     }
 
     /* Card Styling */

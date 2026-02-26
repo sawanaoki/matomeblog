@@ -13,9 +13,10 @@ if (process.env.OPENAI_API_KEY) {
     openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 }
 
-// サンプルのRSSフィードURLリスト
+// サンプルのRSSフィードURLリスト (エンタメ・バズまとめ系)
 const FEED_URLS = [
-    'https://news.yahoo.co.jp/rss/topics/it.xml', // テスト用: Yahoo ITニュース
+    'https://news.yahoo.co.jp/rss/topics/top-picks.xml', // Yahoo 主要ニュース
+    'https://news.yahoo.co.jp/rss/topics/entertainment.xml', // Yahoo エンタメ
 ];
 
 const OUTPUT_DIR = path.join(__dirname, '../frontend/src/data');
