@@ -123,10 +123,10 @@ const formatDate = (dateString) => {
     .article-page {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 2rem;
+        padding: 1.5rem;
         display: grid;
-        grid-template-columns: 1fr 300px;
-        gap: 3rem;
+        grid-template-columns: 1fr 280px;
+        gap: 2rem;
         align-items: start;
     }
 
@@ -134,16 +134,15 @@ const formatDate = (dateString) => {
     .article-container {
         background: var(--card-bg);
         border: 1px solid var(--glass-border);
-        border-radius: 20px;
-        padding: 3rem;
-        backdrop-filter: blur(10px);
-        box-shadow: var(--glass-shadow);
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
 
     /* Header */
     .article-header {
-        margin-bottom: 2rem;
-        padding-bottom: 2rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
         border-bottom: 1px solid var(--glass-border);
     }
 
@@ -170,21 +169,20 @@ const formatDate = (dateString) => {
     }
 
     .title {
-        font-size: 2.2rem;
+        font-size: 1.8rem;
         font-weight: 800;
         line-height: 1.3;
         color: var(--text-main);
     }
 
-    /* Banner */
     .original-link-banner {
         display: flex;
         align-items: center;
-        background: linear-gradient(135deg, rgba(30,58,138,0.5) 0%, rgba(59,130,246,0.2) 100%);
-        border: 1px solid rgba(59, 130, 246, 0.4);
-        padding: 1.2rem;
-        border-radius: 12px;
-        margin-bottom: 2.5rem;
+        background: linear-gradient(135deg, rgba(239,246,255,1) 0%, rgba(219,234,254,0.5) 100%);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
         transition: transform 0.2s, box-shadow 0.2s;
     }
 
@@ -227,20 +225,20 @@ const formatDate = (dateString) => {
 
     /* Content Body */
     .content-body {
-        margin-bottom: 4rem;
+        margin-bottom: 2rem;
     }
 
     .ai-summary {
-        background: rgba(16, 185, 129, 0.1);
+        background: rgba(16, 185, 129, 0.05);
         border-left: 4px solid #10b981;
-        padding: 1.5rem;
-        border-radius: 0 12px 12px 0;
-        margin-bottom: 2.5rem;
+        padding: 1rem 1.5rem;
+        border-radius: 0 8px 8px 0;
+        margin-bottom: 1.5rem;
     }
 
     .ai-header {
         font-weight: 800;
-        color: #34d399;
+        color: #047857;
         display: flex;
         align-items: center;
         gap: 0.5rem;
@@ -254,16 +252,17 @@ const formatDate = (dateString) => {
     }
 
     .ai-summary li {
-        margin-bottom: 0.5rem;
-        line-height: 1.6;
-        color: #d1fae5;
+        margin-bottom: 0.3rem;
+        line-height: 1.5;
+        font-size: 0.95rem;
+        color: #064e3b;
     }
 
     .snippet-text {
-        font-size: 1.1rem;
-        line-height: 1.8;
-        color: #cbd5e1;
-        margin-bottom: 2rem;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        color: var(--text-main);
+        margin-bottom: 1.5rem;
     }
 
     .article-hero-image {
@@ -276,27 +275,27 @@ const formatDate = (dateString) => {
 
     /* Comments Section */
     .comments-section {
-        background: rgba(15, 23, 42, 0.4);
+        background: rgba(0, 0, 0, 0.02);
         border: 1px solid var(--glass-border);
-        border-radius: 16px;
-        padding: 2.5rem;
+        border-radius: 12px;
+        padding: 1.5rem;
     }
 
     .comments-title {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         font-weight: 800;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        border-bottom: 2px solid rgba(255, 255, 255, 0.05);
-        padding-bottom: 1rem;
+        gap: 0.4rem;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+        padding-bottom: 0.8rem;
     }
 
     .comment-box {
-        margin-bottom: 1.5rem;
-        padding-bottom: 1.5rem;
-        border-bottom: 1px dashed rgba(255,255,255,0.1);
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px dashed rgba(0,0,0,0.1);
     }
 
     .comment-box:last-child {
@@ -319,18 +318,18 @@ const formatDate = (dateString) => {
     .res-time { color: #64748b; font-size: 0.8rem; margin-left: auto; }
 
     .comment-body {
-        font-size: 1.1rem;
-        line-height: 1.6;
+        font-size: 0.95rem;
+        line-height: 1.5;
         color: var(--text-main);
-        padding-left: 1.5rem;
+        padding-left: 1rem;
     }
 
     /* Form */
     .comment-form {
-        margin-top: 3rem;
-        background: rgba(0,0,0,0.2);
-        padding: 2rem;
-        border-radius: 12px;
+        margin-top: 2rem;
+        background: rgba(255,255,255,0.5);
+        padding: 1.5rem;
+        border-radius: 8px;
         border: 1px solid var(--glass-border);
     }
 
@@ -351,13 +350,13 @@ const formatDate = (dateString) => {
 
     input, textarea {
         width: 100%;
-        background: rgba(15, 23, 42, 0.8);
+        background: #fff;
         border: 1px solid var(--glass-border);
-        color: white;
-        padding: 0.8rem 1rem;
-        border-radius: 8px;
+        color: var(--text-main);
+        padding: 0.6rem 0.8rem;
+        border-radius: 6px;
         font-family: inherit;
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 
     textarea {
@@ -392,10 +391,10 @@ const formatDate = (dateString) => {
     .sidebar-widget {
         background: var(--card-bg);
         border: 1px solid var(--glass-border);
-        border-radius: 16px;
-        padding: 1.5rem;
+        border-radius: 12px;
+        padding: 1.2rem;
         position: sticky;
-        top: 100px;
+        top: 70px;
     }
 
     .sidebar-widget h3 {
@@ -435,11 +434,14 @@ const formatDate = (dateString) => {
     }
     
     @media (max-width: 768px) {
+        .article-page {
+            padding: 1rem;
+        }
         .article-container {
-            padding: 1.5rem;
+            padding: 1rem;
         }
         .title {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
         }
     }
 </style>

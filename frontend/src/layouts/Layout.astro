@@ -46,14 +46,14 @@ const { title } = Astro.props;
 
 <style is:global>
     :root {
-        --bg-color: #0f172a;
-        --text-main: #f8fafc;
-        --text-muted: #94a3b8;
-        --accent-color: #3b82f6;
-        --accent-glow: #60a5fa;
-        --card-bg: rgba(30, 41, 59, 0.7);
-        --glass-border: rgba(255, 255, 255, 0.1);
-        --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        --bg-color: #f1f5f9;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --accent-color: #2563eb;
+        --accent-glow: #3b82f6;
+        --card-bg: rgba(255, 255, 255, 0.95);
+        --glass-border: rgba(0, 0, 0, 0.08);
+        --glass-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         --font-body: 'Noto Sans JP', 'Inter', sans-serif;
     }
 
@@ -93,7 +93,7 @@ const { title } = Astro.props;
         height: 100vh;
         z-index: -1;
         overflow: hidden;
-        background: #0f172a;
+        background: #f1f5f9;
     }
 
     .blob {
@@ -107,7 +107,7 @@ const { title } = Astro.props;
     .blob-1 {
         width: 500px;
         height: 500px;
-        background: radial-gradient(circle, rgba(59,130,246,0.3) 0%, rgba(30,58,138,0) 70%);
+        background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, rgba(255,255,255,0) 70%);
         top: -10%;
         left: -10%;
     }
@@ -115,7 +115,7 @@ const { title } = Astro.props;
     .blob-2 {
         width: 600px;
         height: 600px;
-        background: radial-gradient(circle, rgba(139,92,246,0.25) 0%, rgba(76,29,149,0) 70%);
+        background: radial-gradient(circle, rgba(139,92,246,0.1) 0%, rgba(255,255,255,0) 70%);
         bottom: -20%;
         right: -10%;
         animation-delay: -5s;
@@ -124,7 +124,7 @@ const { title } = Astro.props;
     .blob-3 {
         width: 400px;
         height: 400px;
-        background: radial-gradient(circle, rgba(16,185,129,0.2) 0%, rgba(6,78,59,0) 70%);
+        background: radial-gradient(circle, rgba(16,185,129,0.1) 0%, rgba(255,255,255,0) 70%);
         top: 40%;
         left: 30%;
         animation-delay: -10s;
@@ -142,11 +142,12 @@ const { title } = Astro.props;
         position: fixed;
         top: 0;
         width: 100%;
-        height: 70px;
-        background: rgba(15, 23, 42, 0.6);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        height: 50px;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
         border-bottom: 1px solid var(--glass-border);
+        box-shadow: 0 1px 5px rgba(0,0,0,0.05);
         z-index: 100;
         display: flex;
         justify-content: center;
@@ -163,12 +164,12 @@ const { title } = Astro.props;
     }
 
     .logo {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         font-weight: 900;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.3rem;
     }
 
     .logo-icon {
@@ -177,11 +178,11 @@ const { title } = Astro.props;
 
     .nav-links {
         display: flex;
-        gap: 2rem;
+        gap: 1.5rem;
     }
 
     .nav-links a {
-        font-size: 0.95rem;
+        font-size: 0.85rem;
         font-weight: 600;
         color: var(--text-muted);
         transition: all 0.3s ease;
@@ -195,29 +196,27 @@ const { title } = Astro.props;
     .nav-links a.active::after {
         content: '';
         position: absolute;
-        bottom: -24px;
+        bottom: -15px;
         left: 0;
         width: 100%;
-        height: 3px;
+        height: 2px;
         background: var(--accent-color);
-        box-shadow: 0 0 10px var(--accent-color);
     }
 
     /* Footer */
     .glass-footer {
         margin-top: auto;
-        padding: 2rem;
+        padding: 1rem;
         text-align: center;
-        background: rgba(15, 23, 42, 0.6);
-        backdrop-filter: blur(12px);
+        background: rgba(255, 255, 255, 0.8);
         border-top: 1px solid var(--glass-border);
         color: var(--text-muted);
-        font-size: 0.85rem;
+        font-size: 0.75rem;
     }
 
     /* Utilities */
     main {
-        padding-top: 100px;
+        padding-top: 60px;
         flex: 1;
     }
 </style>
